@@ -14,6 +14,10 @@ from pytorch_lightning import seed_everything
 from torch import autocast
 from contextlib import contextmanager, nullcontext
 
+cur_path = os.path.dirname(os.path.abspath(__file__))
+base_path = os.path.dirname(cur_path)
+sys.path.insert(0, base_path)
+
 from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
@@ -49,7 +53,9 @@ def numpy_to_pil(images):
 
 def load_model_from_config(config, ckpt, verbose=False):
     print(f"Loading model from {ckpt}")
-    pl_sd = torch.load(ckpt, map_location="cpu")
+    # pl_sd = torch.load(ckpt, map_location="cpu")
+    pl_sd = torch.load(ckpt, map_location="cuda:0")
+    print(f"End loading model from {ckpt}")
     if "global_step" in pl_sd:
         print(f"Global Step: {pl_sd['global_step']}")
     sd = pl_sd["state_dict"]
@@ -62,8 +68,13 @@ def load_model_from_config(config, ckpt, verbose=False):
         print("unexpected keys:")
         print(u)
 
+    print("Model to cuda")
     model.cuda()
+    print("Model to eval")
     model.eval()
+    del pl_sd
+    torch.cuda.empty_cache()
+    print("Empty cache")
     return model
 
 
