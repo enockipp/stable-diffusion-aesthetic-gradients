@@ -1,7 +1,7 @@
 #!/bin/bash
 
 model_path=$1
-model_md5=$(md5sum ${model_path})
+model_md5=$(md5sum ${model_path} | awk -F" " '{print $1}')
 
 echo "LDM model md5=$model_md5"
 
