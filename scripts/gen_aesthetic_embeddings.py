@@ -5,8 +5,8 @@ import torch
 import tqdm
 
 # Just put your images in a folder inside reference_images/
-aesthetic_style = "aivazovsky"
-image_paths = glob.glob(f"reference_images/{aesthetic_style}/*")
+aesthetic_style = "ainightbirds-This-is-my-money"
+image_paths = glob.glob("reference_images/ainightbirds-This-is-my-money/*")
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
