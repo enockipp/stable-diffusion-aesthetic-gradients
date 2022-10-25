@@ -231,7 +231,7 @@ class PersonalizedCLIPEmbedder(AbstractEncoder):
                 text_embs /= text_embs.norm(dim=-1, keepdim=True)
                 sim = text_embs @ image_embs.T
                 loss = -sim
-                print(loss)
+                # print(loss)
 
                 # lr = 0.0001
 
@@ -251,7 +251,7 @@ class PersonalizedCLIPEmbedder(AbstractEncoder):
                     text_embs /= text_embs.norm(dim=-1, keepdim=True)
                     sim = text_embs @ image_embs.T
                     loss = -sim
-                    print(loss)
+                    # print(loss)
 
                 z = full_clip_model.text_model(input_ids=tokens).last_hidden_state
 
